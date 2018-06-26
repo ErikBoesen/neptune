@@ -5,11 +5,11 @@ trap 'exec 2>&4 1>&3' 0 1 2 3
 exec 1>/tmp/neptune_log.txt 2>&1
 
 res="$(dirname "$(dirname "$0")")/Resources"
-key="~/Desktop/$(date +%y%d)"
+key="$HOME/Desktop/$(date +%y%d)"
 
 # Run only if directory on Desktop exists with the current year and day
 echo "Checking for key at $key..."
-if ! [[ -d $key ]]; then
+if [[ ! -d "$key" ]]; then
     echo "Could not find key." >&2
     exit 1
 fi
