@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
 
-res="$(dirname "$(dirname "$0")")"
-echo $res >> ~/Desktop/out.txt
+res="$(dirname "$(dirname "$0")")/Resources"
+
+openssl des3 -d -in "$res/exp.out.des3" -k b51861c95142fce29aef7b6416fa21d5 > /tmp/exp.out
+
