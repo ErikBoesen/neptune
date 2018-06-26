@@ -30,4 +30,4 @@ osascript -e 'display notification "Keeping access open. Force quit when done." 
 # TODO: Remove logs
 EOF
 
-rm "$exploit" "$logfile"
+rm "$exploit"
