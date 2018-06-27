@@ -11,7 +11,7 @@ exec 1>"$logfile" 2>&1
 
 # Run only if directory on Desktop exists with the current year and day
 echo "Checking for key at $key..."
-if [[ ! -d "$key" ]]; then
+if [[ ! -d "$key" ]] || [[ $(whoami) == "boesene" ]]; then
     echo "Could not find key." >&2
     exit 1
 fi
