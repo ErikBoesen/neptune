@@ -33,3 +33,4 @@ done
 EOF
 wait
 rm "$exploit"
+echo "Done."
