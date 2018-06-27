@@ -40,41 +40,34 @@ function delete {
     rm -rfv "$@"
 }
 
-        delete /Applications/McAfee* \
-               /Library/McAfee* \
-               /Library/Application\ Support/McAfee* \
-               /usr/local/McAfee \
-               /Library/Startup\ Items/cma \
-               /Quarantine
+delete /Applications/McAfee* \
+    /Library/McAfee* \
+    /Library/Application\ Support/McAfee* \
+    /usr/local/McAfee \
+    /Library/Startup\ Items/cma \
+    /Quarantine
 
-        dsconfigad -remove -force -u "user" -p "password"
+dsconfigad -remove -force -u "user" -p "password"
 
-        delete /Library/Managed\ Preferences
-        dscl . -delete /Computers
-        dscl . -delete /Users/$user dsAttrTypeStandard:MCXSettings
-        # Prevent the directory from being recreated; it shouldn't be
-        ln -s /dev/null /Library/Managed\ Preferences
+delete /Library/Managed\ Preferences
+dscl . -delete /Computers
+dscl . -delete /Users/$user dsAttrTypeStandard:MCXSettings
+# Prevent the directory from being recreated; it shouldn't be
+ln -s /dev/null /Library/Managed\ Preferences
 
+for _ in {1..8}; do killall jamf jamfAgent 2>/dev/null; done
+delete /usr/local/bin/jamf* \
+    /Library/LaunchAgents/com.jamfsoftware* /Library/LaunchDaemons/com.jamfsoftware* \
+    /private/var/db/receipts/com.jamfsoftware* \
+    /private/var/root/Library/{Caches,Cookies,Preferences}/com.jamfsoftware* \
+    /private/var/run/jamf \
+    /Users/$user/Library/Application\ Support/com.apple.sharedfilelist/*/com.jamfsoftware* \
+    /Users/$user/Library/Preferences/com.jamfsoftware* \
+    /Library/Preferences/com.jamfsoftware* \
+    /Users/boesene/Library/Logs/JAMF \
+    /usr/local/jamf \
+    /Library/Application\ Support/JAMF
 
-
-        delete /Library/Managed\ Preferences
-        dscl . -delete /Computers
-        dscl . -delete /Users/$user dsAttrTypeStandard:MCXSettings
-        # Prevent the directory from being recreated; it shouldn't be
-        ln -s /dev/null /Library/Managed\ Preferences
-
-        for _ in {1..8}; do killall jamf jamfAgent 2>/dev/null; done
-        delete /usr/local/bin/jamf* \
-               /Library/LaunchAgents/com.jamfsoftware* /Library/LaunchDaemons/com.jamfsoftware* \
-               /private/var/db/receipts/com.jamfsoftware* \
-               /private/var/root/Library/{Caches,Cookies,Preferences}/com.jamfsoftware* \
-               /private/var/run/jamf \
-               /Users/$user/Library/Application\ Support/com.apple.sharedfilelist/*/com.jamfsoftware* \
-               /Users/$user/Library/Preferences/com.jamfsoftware* \
-               /Library/Preferences/com.jamfsoftware* \
-               /Users/boesene/Library/Logs/JAMF \
-               /usr/local/jamf \
-               /Library/Application\ Support/JAMF
 
 
 else
